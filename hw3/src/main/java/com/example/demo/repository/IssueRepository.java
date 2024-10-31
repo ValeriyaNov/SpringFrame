@@ -8,6 +8,10 @@ import java.util.List;
 @Repository
 public class IssueRepository {
     private List<Issue> list = new ArrayList<>();
+    public IssueRepository(){
+        list.add(new Issue(1, 2));
+        list.add(new Issue(2, 3));
+    }
 
     public List<Issue> findAll(){
         return List.copyOf(list);

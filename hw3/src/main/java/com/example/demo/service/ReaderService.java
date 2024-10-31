@@ -39,6 +39,7 @@ public class ReaderService {
         return issuerService.getIssuesByIdAllReader(id);
     }
     public List<Reader> getAllReader() {
+
         return readerRepository.findAll();
     }
 

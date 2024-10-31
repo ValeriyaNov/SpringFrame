@@ -1,20 +1,29 @@
 package com.example.demo.controllers;
+import com.example.demo.model.Book;
 import com.example.demo.model.Issue;
 import com.example.demo.model.Reader;
 import com.example.demo.service.ReaderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/reader")
 public class ReaderController {
     @Autowired
     ReaderService readerService;
+    @GetMapping("/all")
+    public String getReaderAll(Model model){
+        List<Reader> list = readerService.getAllReader();
+        model.addAttribute("list", list);
 
+        return "readers";
+    }
     @GetMapping("{id}")
     public String getReaderInfo(@PathVariable Long id) {
         Reader reader = readerService.getReaderById(id);
