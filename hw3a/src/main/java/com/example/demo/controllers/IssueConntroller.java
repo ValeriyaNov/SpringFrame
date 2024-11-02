@@ -1,0 +1,67 @@
+package com.example.demo.controllers;
+import com.example.demo.model.Issue;
+import com.example.demo.model.Reader;
+import com.example.demo.service.IssueService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
+
+@Controller
+@RequestMapping("/issues")
+public class IssueConntroller {
+    @Autowired
+    private IssueService service;
+    @GetMapping("/all")
+    public String getIssueAll(Model model){
+        Iterable<Issue> list = service.getAllIssue();
+        model.addAttribute("list", list);
+        return "issues";
+    }
+    @PostMapping
+    public ResponseEntity<Issue> issueBook(@RequestBody IssueRequest request) {
+
+        Issue issue;
+        try {
+            issue = service.issue(request);
+
+        } catch (NoSuchElementException e) {
+
+            return ResponseEntity.notFound().build();
+        } catch (RuntimeException e) {
+
+            return new ResponseEntity<>(HttpStatusCode.valueOf(409));
+        }
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(issue);
+    }
+
+    @GetMapping("/{id}")
+    public String getIssueInfo(Model model, @PathVariable Long id) {
+        Optional<Issue> list = service.getIssueById(id);
+        model.addAttribute("list", list.get());
+        if (list != null) {
+            return "issues";
+        } else {
+            throw new IllegalArgumentException("Задача не найдена");
+
+        }
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Issue> returnedIssue(@PathVariable Long id) {
+        Issue returnedIssue = service.returnedIssue(id);
+        return returnedIssue != null
+                ? ResponseEntity.ok(returnedIssue)
+                : ResponseEntity.badRequest().build();
+    }
+
+
+}

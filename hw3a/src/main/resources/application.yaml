@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://Localhost:5432/books
+    username: lera
+    password: lera
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+
