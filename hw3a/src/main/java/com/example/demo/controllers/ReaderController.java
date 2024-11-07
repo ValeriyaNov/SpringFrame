@@ -4,6 +4,8 @@ import com.example.demo.model.Issue;
 import com.example.demo.model.Reader;
 import com.example.demo.service.IssueService;
 import com.example.demo.service.ReaderService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,32 +20,34 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/readers")
+@Tag(name = "Читатели")
 public class ReaderController {
     @Autowired
     ReaderService readerService;
     @Autowired
     IssueService issueService;
     @GetMapping("/all")
-    public String getReaderAll(Model model){
+    @Operation(summary = "Get all readers", description = "Загружает список всех читателей, которые зарегестрированы")
+    public ResponseEntity<Iterable<Reader>> getReaderAll(Model model){
         Iterable<Reader> list = readerService.getAllReader();
         model.addAttribute("list", list);
-
-        return "readers";
+        return list!=null
+                ? new ResponseEntity<>(list, HttpStatus.OK)
+                : ResponseEntity.notFound().build();
     }
     @GetMapping("/{id}")
-    public String getReaderInfo(Model model, @PathVariable Long id) {
-        Optional<Reader> list = readerService.getReaderById(id);
-        model.addAttribute("list", list.get());
-        if (list != null) {
-            return "readers";
-        } else {
-            throw new IllegalArgumentException("Читатель не найден");
+    @Operation(summary = "Get reader by id", description = "Загружает данные читателя с указанным идентификатором в пути")
+    public ResponseEntity<Optional<Reader>> getReaderById(@PathVariable long id) {
+        Optional<Reader> reader = readerService.getReaderById(id);
 
-        }
+        return reader != null
+                ? ResponseEntity.ok(reader)
+                : ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteBook(@PathVariable Long id) {
+    @Operation(summary = "Delete reader by id", description = "Удаляет данные читателя с указанным идентификатором")
+    public ResponseEntity<Void> deleteReader(@PathVariable Long id) {
         readerService.deleteReaderById(id);
         return ResponseEntity.noContent().build();
     }
@@ -60,11 +64,23 @@ public class ReaderController {
         return "readerIssue";
     }
     @PostMapping("/reader/")
-    public ResponseEntity<Reader> createBook(@RequestBody Reader reader) {
+    @Operation(summary = "Create new reader", description = "Создаёт данные нового читателя в библиотеке")
+    public ResponseEntity<Reader> createReader(@RequestBody Reader reader) {
         Reader newReader = readerService.addReader(reader);
         return newReader != null
                 ? new ResponseEntity<>(newReader, HttpStatus.CREATED)
                 : ResponseEntity.badRequest().build();
 
+    }
+    @PutMapping("/{id}")
+    @Operation(summary = "Update reader by id", description = "Обновляет данные читателя")
+    public ResponseEntity<Reader> updateBookById (@RequestBody Reader initReader, @PathVariable Long id) {
+        Optional<Reader> reader = readerService.getReaderById(id);
+        if (reader.isPresent()) {
+
+            return new ResponseEntity<>(readerService.updateReader(id, initReader), HttpStatus.OK);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
 }

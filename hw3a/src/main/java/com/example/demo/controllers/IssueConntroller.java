@@ -2,6 +2,8 @@ package com.example.demo.controllers;
 import com.example.demo.model.Issue;
 import com.example.demo.model.Reader;
 import com.example.demo.service.IssueService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -15,17 +17,20 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Controller
+@Tag(name = "Задачи")
 @RequestMapping("/issues")
 public class IssueConntroller {
     @Autowired
     private IssueService service;
     @GetMapping("/all")
+    @Operation(summary = "Get all issues", description = "Загружает все задачи библиотеки")
     public String getIssueAll(Model model){
         Iterable<Issue> list = service.getAllIssue();
         model.addAttribute("list", list);
         return "issues";
     }
     @PostMapping
+    @Operation(summary = "Create new issue", description = "Создание задачи")
     public ResponseEntity<Issue> issueBook(@RequestBody IssueRequest request) {
 
         Issue issue;
@@ -44,6 +49,7 @@ public class IssueConntroller {
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Get issue by id", description = "Загружает задачу по id")
     public String getIssueInfo(Model model, @PathVariable Long id) {
         Optional<Issue> list = service.getIssueById(id);
         model.addAttribute("list", list.get());

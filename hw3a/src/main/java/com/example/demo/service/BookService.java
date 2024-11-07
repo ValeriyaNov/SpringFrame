@@ -29,6 +29,7 @@ public class BookService {
 
 
     public Iterable<Book> getAllBook() {
+
         return bookRepository.findAll();
     }
     public Book updateBook(Long id, Book bookDetails){
@@ -36,6 +37,7 @@ public class BookService {
         if (optionalBook.isPresent()){
             Book book = optionalBook.get();
             book.setTitle(bookDetails.getTitle());
+            book.setAuthor(bookDetails.getAuthor());
             return bookRepository.save(book);
         }
         else{
