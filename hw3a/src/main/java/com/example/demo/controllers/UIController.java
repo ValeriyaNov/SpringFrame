@@ -27,6 +27,11 @@ public class UIController {
     @Autowired
     IssueService issuerService;
 
+    @GetMapping("/login")
+    public String loginPage() {
+        return "loginPage";
+    }
+
 
     @GetMapping("/books")
     public String getAllBooks(Model model) {

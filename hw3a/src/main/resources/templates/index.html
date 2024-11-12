@@ -1,21 +1,15 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
-
+<html lang="en"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://kit.fontawesome.com/f1f16614cc.js" crossorigin="anonymous"></script>
+    <title>Home page</title>
 </head>
-
 <body>
-<div class="Home">
-    <h3 class="title_text">Сервис книг</h3>
-</div>
-<div class="nav">
-    <a href="/book/all" class="nav_item">Книги</a>
-</div>
+<h2>This is a home page!</h2>
+<div sec:authorize="!isAuthenticated()"><a href="/login">login</a></div>
+<div sec:authorize="hasRole('USER')"><a href="/public">user</a></div>
+<div sec:authorize="hasRole('ADMIN')"><a href="/private">admin</a></div>
 </body>
 </html>
