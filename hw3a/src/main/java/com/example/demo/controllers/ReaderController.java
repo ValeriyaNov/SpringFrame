@@ -1,4 +1,5 @@
 package com.example.demo.controllers;
+import com.example.demo.aspect.RecoverException;
 import com.example.demo.model.Book;
 import com.example.demo.model.Issue;
 import com.example.demo.model.Reader;
@@ -72,6 +73,7 @@ public class ReaderController {
                 : ResponseEntity.badRequest().build();
 
     }
+
     @PutMapping("/{id}")
     @Operation(summary = "Update reader by id", description = "Обновляет данные читателя")
     public ResponseEntity<Reader> updateBookById (@RequestBody Reader initReader, @PathVariable Long id) {
