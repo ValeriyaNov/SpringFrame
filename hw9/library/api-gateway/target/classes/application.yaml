@@ -1,0 +1,41 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes[0]:
+        id: books
+        uri: http://localhost:8081
+        predicates:
+          - Path=/book-client/**
+        filters:
+          - RewritePath=/book-client/(?<remaining>.*),/$\{remaining}
+      routes[1]:
+        id: readers
+        uri: http://localhost:8084
+        predicates:
+          - Path=/reader-client/**
+        filters:
+          - RewritePath=/reader-client/(?<remaining>.*),/$\{remaining}
+#      routes[2]:
+#        id: issues
+#        uri: http://localhost:8085
+#        predicates:
+#          - Path=/issues-client/**
+#        filters:
+#          - RewritePath=/issues-client/(?<remaining>.*),/$\{remaining}
+
+
+
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link th:href="@{/style.css}" rel="stylesheet" >
+    <script src="https://kit.fontawesome.com/f1f16614cc.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+<div class="title">
+    <h3 class="title_text">Все читатели</h3>
+</div>
+<div class="list">
+    <table class="tab">
+        <tr class="list_text">
+            <th class="tab_item">Книга</th>
+            <th class="tab_item">Читатель</th>
+            <th class="tab_item">Дата получения</th>
+            <th class="tab_item">Дата возврата</th>
+        </tr>
+        <tr th:each="list:${list}" class="list_text">
+            <td th:text="${list.getBookId}" class="tab_context_item"></td>
+            <td th:text="${list.getReaderId}" class="tab_context_item"></td>
+            <td th:text="${list.getTimestamp}" class="tab_context_item"></td>
+            <td th:text="${list.getReturnedTimestamp}" class="tab_context_item"></td>
+        </tr>
+    </table>
+
+</div>
+</body>
+</html>
