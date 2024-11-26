@@ -1,6 +1,7 @@
 package org.example.service;
 
 
+import org.example.Timer;
 import org.example.model.Book;
 import org.example.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,7 @@ public class BookService {
         return bookRepository.save(book);
     }
 
-
+    @Timer
     public Iterable<Book> getAllBook() {
 
         return bookRepository.findAll();

@@ -2,6 +2,7 @@ package org.example.controllers;
 
 //import com.example.demo.model.Book;
 //import com.example.demo.model.Issue;
+import org.example.Timer;
 import org.example.model.Reader;
 //import org.example.service.IssueService;
 import org.example.service.ReaderService;
@@ -22,6 +23,7 @@ import java.util.Optional;
 @Controller
 @RequestMapping("/readers")
 @Tag(name = "Читатели")
+@Timer
 public class ReaderController {
     @Autowired
     ReaderService readerService;

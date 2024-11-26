@@ -9,6 +9,7 @@
         <module name="api-gateway" />
         <module name="issue-client" />
         <module name="books-client" />
+        <module name="starter" />
         <module name="eureka-server" />
         <module name="reader-client" />
       </profile>
@@ -26,6 +27,7 @@
       <module name="eureka-server" options="-parameters" />
       <module name="issue-client" options="-parameters" />
       <module name="reader-client" options="-parameters" />
+      <module name="starter" options="-parameters" />
     </option>
   </component>
 </project>

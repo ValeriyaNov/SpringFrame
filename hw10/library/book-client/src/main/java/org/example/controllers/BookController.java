@@ -1,4 +1,5 @@
 package org.example.controllers;
+import org.example.Timer;
 import org.example.model.Book;
 import org.example.service.BookService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
-
+@Timer
 @Controller
 @Tag(name = "Книги")
 @RequestMapping("/books")
@@ -21,6 +22,7 @@ public class BookController {
     BookService bookService;
     @GetMapping("/all")
     @Operation(summary = "Get all books", description = "Загружает список всех книг, которые есть в библиотеке")
+    @Timer
     public ResponseEntity<Iterable<Book>> getBookAll(){
         Iterable<Book> list = bookService.getAllBook();
         return list!=null

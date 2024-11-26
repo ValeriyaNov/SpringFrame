@@ -1,6 +1,7 @@
 package org.example.service;
 
 
+import org.example.Timer;
 import org.example.model.Issue;
 import org.example.model.IssueRequest;
 import org.example.provider.BookProvider;
@@ -53,7 +54,7 @@ public class IssueService {
 
         return issue;
     }
-
+@Timer
     public Optional<Issue> getIssueById(long id) {
 
         return issueRepository.findById(id);
