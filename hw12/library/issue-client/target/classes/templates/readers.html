@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link th:href="@{/style.css}" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/f1f16614cc.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+<div class="title">
+    <h3 class="title_text">Все читатели</h3>
+</div>
+<div class="list">
+    <ul class="list_text" th:each=list:${list}>
+        <li th:text="${list.name}" class="list_text_item"></li>
+    </ul>
+</div>
+</body>
+</html>
